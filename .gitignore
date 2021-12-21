@@ -27,6 +27,7 @@
 !.vscode/extensions.json
 
 # misc
+/.angular/cache
 /.sass-cache
 /connect.lock
 /coverage
@@ -39,3 +40,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+projects/ng-select2/README.md

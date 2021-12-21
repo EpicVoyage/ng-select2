@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Select2OptionData } from './ng-select2.interface';
-import { Options } from 'Select2';
+import { Options } from 'select2';
 
 declare var jQuery: any;
 
@@ -134,7 +134,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
     }
 
     if (changes['dropdownParent'] && changes['dropdownParent'].previousValue !== changes['dropdownParent'].currentValue) {
-      this.renderer.setAttribute(this.selector.nativeElement, 'data-dropdownParent', this.dropdownParent);
+      this.renderer.setAttribute(this.selector.nativeElement, 'data-dropdownParent', '#' + this.dropdownParent);
     }
 
     if (changes['allowClear'] && changes['allowClear'].previousValue !== changes['allowClear'].currentValue) {
@@ -144,7 +144,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
 
   ngAfterViewInit() {
     this.element = jQuery(this.selector.nativeElement);
-    this.renderer.setAttribute(this.selector.nativeElement, 'data-dropdownParent', this.dropdownParent);
+    this.renderer.setAttribute(this.selector.nativeElement, 'data-dropdownParent', '#' + this.dropdownParent);
     this.renderer.setAttribute(this.selector.nativeElement, 'data-allow-clear', this.allowClear.toString());
     // console.log(this.selector.nativeElement);
 
@@ -188,18 +188,14 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
       this.renderer.setProperty(this.selector.nativeElement, 'innerHTML', '');
     }
 
-    let options: Options = {
+    const options: Options = {
       data: this.data,
       width: (this.width) ? this.width : 'resolve',
       placeholder: this.placeholder
     };
 
     if (this.dropdownParent) {
-      options = {
-        data: this.data,
-        width: (this.width) ? this.width : 'resolve',
-        dropdownParent: jQuery('#' + this.dropdownParent),
-      };
+      options.dropdownParent = jQuery('#' + this.dropdownParent);
     }
 
     Object.assign(options, this.options);
